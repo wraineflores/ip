@@ -23,7 +23,7 @@ public class Duke {
                     if (addList == null) {
                         break;
                     } else {
-                        System.out.println(Integer.toString(addListPrintCounter) + ": " + addList);
+                        System.out.println(Integer.toString(addListPrintCounter) + ". " + addList);
                         addListPrintCounter++;
                     }
                 }
