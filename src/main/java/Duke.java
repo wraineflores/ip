@@ -9,8 +9,26 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         line = in.nextLine();
 
+        String[] addLists = new String[100];
+        int addListsCounter = 0;
+        int addListPrintCounter = 1;
+
         while (!"bye".equals(line)) {
-            System.out.println(line);
+            if (!"list".equals(line)) {
+                addLists[addListsCounter] = line;
+                addListsCounter++;
+                System.out.println("added: " + line);
+            } else {
+                for (String addList : addLists) {
+                    if (addList == null) {
+                        break;
+                    } else {
+                        System.out.println(Integer.toString(addListPrintCounter) + ": " + addList);
+                        addListPrintCounter++;
+                    }
+                }
+                addListPrintCounter = 1;
+            }
             line = in.nextLine();
         }
 
