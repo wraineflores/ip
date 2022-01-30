@@ -7,43 +7,54 @@ public class Duke {
 
         String line;
         Scanner in = new Scanner(System.in);
-        line = in.nextLine().trim();
+        line = in.nextLine().trim();            // reads input
+        LineSplitter lineSplitter;              // class that splits input
 
-        Task[] addLists = new Task[100];
-        int addListsCounter = 0;
-        int addListPrintCounter = 1;
+        Task[] addLists = new Task[100];        // array of all tasks
+        int addListsCounter = 0;                // counts the number of non-null elements in the array
+        int workingIndex = 0;                   // points to the index where we want o mark or unmark
 
         while (!"bye".equals(line)) {
-            if ("list".equals(line)) {
-                System.out.println("Here are the tasks in your list:");
-                for (Task addList : addLists) {
-                    if (addList == null) {
-                        break;
-                    } else {
-                        System.out.println(Integer.toString(addListPrintCounter) + ".[" + addList.getStatusIcon() + "]" + addList.getDescription());
-                        addListPrintCounter++;
-                    }
-                }
-                addListPrintCounter = 1;
+            if (line.startsWith("list")) {
+                List updatedList = new List(addLists);
+                updatedList.printList();
             } else if (line.startsWith("mark")) {
-                System.out.println("Nice! I've marked this task as done:");
-                Task addList = addLists[Integer.parseInt(line.substring(5)) - 1];
-                addList.markAsDone();
-                System.out.println("    [" + addList.getStatusIcon() + "] " + addList.getDescription());
+                workingIndex = Integer.parseInt(line.replace("mark", "").trim()) - 1;
+                addLists[workingIndex].markAsDone();
+                System.out.println(addLists[workingIndex].toString());
             } else if (line.startsWith("unmark")) {
-                System.out.println("OK, I've marked this task as not done yet:");
-                Task addList = addLists[Integer.parseInt(line.substring(7)) - 1];
-                addList.markAsUndone();
-                System.out.println("    [" + addList.getStatusIcon() + "] " + addList.getDescription());
-            } else {
-                Task t = new Task(line);
-                addLists[addListsCounter] = t;
+                workingIndex = Integer.parseInt(line.replace("unmark", "").trim()) - 1;
+                addLists[workingIndex].markAsUndone();
+                System.out.println(addLists[workingIndex].toString());
+            } else if (line.startsWith("todo")) {
+                lineSplitter = new LineSplitter(line);
+                lineSplitter.splitLine();
+                addLists[addListsCounter] = new Todo(lineSplitter.getNewDescription());
+                addLists[addListsCounter].printAdded();
+                System.out.println(addLists[addListsCounter].toString());
                 addListsCounter++;
-                System.out.println("added: " + line);
+                System.out.println("Now you have " + addListsCounter + " tasks in the list.");
+            } else if (line.startsWith("deadline")) {
+                lineSplitter = new LineSplitter(line);
+                lineSplitter.splitLine();
+                addLists[addListsCounter] = new Deadline(lineSplitter.getNewDescription(), lineSplitter.getByOrAt());
+                addLists[addListsCounter].printAdded();
+                System.out.println(addLists[addListsCounter].toString());
+                addListsCounter++;
+                System.out.println("Now you have " + addListsCounter + " tasks in the list.");
+            } else if (line.startsWith("event")) {
+                lineSplitter = new LineSplitter(line);
+                lineSplitter.splitLine();
+                addLists[addListsCounter] = new Event(lineSplitter.getNewDescription(), lineSplitter.getByOrAt());
+                addLists[addListsCounter].printAdded();
+                System.out.println(addLists[addListsCounter].toString());
+                addListsCounter++;
+                System.out.println("Now you have " + addListsCounter + " tasks in the list.");
+            } else {
+                System.out.println("Invalid input: Please try again.");
             }
             line = in.nextLine().trim();
         }
-
         System.out.println("Bye. Until we meet again!");
     }
 }
