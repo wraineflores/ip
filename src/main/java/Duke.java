@@ -27,34 +27,37 @@ public class Duke {
                 addLists[workingIndex].markAsUndone();
                 System.out.println(addLists[workingIndex].toString());
             } else if (line.startsWith("todo")) {
-                lineSplitter = new LineSplitter(line);
-                lineSplitter.splitLine();
+                lineSplitter = getLineSplitter(line);
                 addLists[addListsCounter] = new Todo(lineSplitter.getNewDescription());
-                addLists[addListsCounter].printAdded();
-                System.out.println(addLists[addListsCounter].toString());
-                addListsCounter++;
-                System.out.println("Now you have " + addListsCounter + " tasks in the list.");
+                addListsCounter = printAdded(addListsCounter, addLists[addListsCounter]);
             } else if (line.startsWith("deadline")) {
-                lineSplitter = new LineSplitter(line);
-                lineSplitter.splitLine();
+                lineSplitter = getLineSplitter(line);
                 addLists[addListsCounter] = new Deadline(lineSplitter.getNewDescription(), lineSplitter.getByOrAt());
-                addLists[addListsCounter].printAdded();
-                System.out.println(addLists[addListsCounter].toString());
-                addListsCounter++;
-                System.out.println("Now you have " + addListsCounter + " tasks in the list.");
+                addListsCounter = printAdded(addListsCounter, addLists[addListsCounter]);
             } else if (line.startsWith("event")) {
-                lineSplitter = new LineSplitter(line);
-                lineSplitter.splitLine();
+                lineSplitter = getLineSplitter(line);
                 addLists[addListsCounter] = new Event(lineSplitter.getNewDescription(), lineSplitter.getByOrAt());
-                addLists[addListsCounter].printAdded();
-                System.out.println(addLists[addListsCounter].toString());
-                addListsCounter++;
-                System.out.println("Now you have " + addListsCounter + " tasks in the list.");
+                addListsCounter = printAdded(addListsCounter, addLists[addListsCounter]);
             } else {
                 System.out.println("Invalid input: Please try again.");
             }
             line = in.nextLine().trim();
         }
         System.out.println("Bye. Until we meet again!");
+    }
+
+    private static int printAdded(int addListsCounter, Task addList) {
+        addList.printAdded();
+        System.out.println(addList.toString());
+        addListsCounter++;
+        System.out.println("Now you have " + addListsCounter + " tasks in the list.");
+        return addListsCounter;
+    }
+
+    private static LineSplitter getLineSplitter(String line) {
+        LineSplitter lineSplitter;
+        lineSplitter = new LineSplitter(line);
+        lineSplitter.splitLine();
+        return lineSplitter;
     }
 }

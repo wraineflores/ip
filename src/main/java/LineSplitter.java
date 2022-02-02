@@ -16,12 +16,16 @@ public class LineSplitter {
             tempDescription = description.replace("deadline", "").trim();
             arrOfDescription = tempDescription.split("/by", 2);
             newDescription = arrOfDescription[0];
-            byOrAt = arrOfDescription[1];
+            if (arrOfDescription.length > 1) {
+                byOrAt = arrOfDescription[1];
+            }
         } else if (description.startsWith("event")) {
             tempDescription = description.replace("event", "").trim();
             arrOfDescription = tempDescription.split("/at", 2);
             newDescription = arrOfDescription[0];
-            byOrAt = arrOfDescription[1];
+            if (arrOfDescription.length > 1) {
+                byOrAt = arrOfDescription[1];
+            }
         }
     }
 
