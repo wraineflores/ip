@@ -22,7 +22,7 @@ public class Task {
     }
 
     public void printAdded() {
-        System.out.println("Got it. I've added this task: ");
+        System.out.println("Got it. I've added this task:");
     }
 
     public String getDescription() {
