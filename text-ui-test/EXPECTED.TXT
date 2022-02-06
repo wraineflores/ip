@@ -24,4 +24,10 @@ Here are the tasks in your list:
 1.[T][ ] read book
 2.[D][X] return book  (by:  Sunday)
 3.[E][ ] project meeting  (at:  Mon 2-4pm)
+OOPS!!! The description of a todo cannot be empty.
+OOPS!!! I'm sorry, but I don't know what that means :-(
+Oh no! Something went wrong.
+OOPS!!! The description of a deadline must have a task and date.
+Oh no! Something went wrong.
+OOPS!!! The description of an event must have a task and date.
 Bye. Until we meet again!

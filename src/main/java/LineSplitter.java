@@ -13,18 +13,22 @@ public class LineSplitter {
         if (description.startsWith("todo")) {
             newDescription = description.replace("todo", "").trim();
         } else if (description.startsWith("deadline")) {
-            tempDescription = description.replace("deadline", "").trim();
-            arrOfDescription = tempDescription.split("/by", 2);
-            newDescription = arrOfDescription[0];
-            if (arrOfDescription.length > 1) {
-                byOrAt = arrOfDescription[1];
+            try {
+                this.tempDescription = description.replace("deadline", "").trim();
+                this.arrOfDescription = tempDescription.split("/by", 2);
+                this.newDescription = arrOfDescription[0];
+                this.byOrAt = arrOfDescription[1];
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Oh no! Something went wrong.");
             }
         } else if (description.startsWith("event")) {
-            tempDescription = description.replace("event", "").trim();
-            arrOfDescription = tempDescription.split("/at", 2);
-            newDescription = arrOfDescription[0];
-            if (arrOfDescription.length > 1) {
-                byOrAt = arrOfDescription[1];
+            try {
+                this.tempDescription = description.replace("event", "").trim();
+                this.arrOfDescription = tempDescription.split("/at", 2);
+                this.newDescription = arrOfDescription[0];
+                this.byOrAt = arrOfDescription[1];
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Oh no! Something went wrong.");
             }
         }
     }
