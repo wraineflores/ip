@@ -4,14 +4,10 @@ public class Duke {
     //@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("DM_DEFAULT_ENCODING")
     public static void main(String[] args) throws DukeException {
         System.out.println("Hello! I'm Earl Grey\nWhat can I do for you?");
-<<<<<<< HEAD
-        // test master commit comment
-=======
         String TODO_EXCEPTION_STATEMENT = "OOPS!!! The description of a todo cannot be empty.";
         String DEADLINE_EXCEPTION_STATEMENT = "OOPS!!! The description of a deadline must have a task and date.";
         String EVENT_EXCEPTION_STATEMENT = "OOPS!!! The description of an event must have a task and date.";
         String ELSE_EXCEPTION_STATEMENT = "OOPS!!! I'm sorry, but I don't know what that means :-(";
->>>>>>> branch-Level-5
 
         String line;
         Scanner in = new Scanner(System.in);
