@@ -1,3 +1,5 @@
+package dukepackage;
+
 public class LineSplitter {
     protected String description;
     protected String tempDescription;
