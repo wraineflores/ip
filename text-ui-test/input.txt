@@ -7,4 +7,8 @@ unmark 1
 list
 event project meeting /at Mon 2-4pm
 list
+todo
+blah
+deadline
+event
 bye
