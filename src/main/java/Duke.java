@@ -1,7 +1,22 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Duke {
     //@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("DM_DEFAULT_ENCODING")
+
+    static String fileContent = "";
+
+    private static void readFromFile(String filePath) throws FileNotFoundException {
+        File file = new File(filePath);
+        Scanner scan = new Scanner(file);
+        while (scan.hasNextLine()) {
+            fileContent = fileContent.concat(scan.nextLine() + "\n");
+        }
+    }
+
     public static void main(String[] args) throws DukeException {
         System.out.println("Hello! I'm Earl Grey\nWhat can I do for you?");
         String TODO_EXCEPTION_STATEMENT = "OOPS!!! The description of a todo cannot be empty.";
@@ -54,6 +69,12 @@ public class Duke {
             line = in.nextLine().trim();
         }
         System.out.println("Bye. Until we meet again!");
+    }
+
+    private static void writeToFile(String filePath, String fileContent) throws IOException {
+        FileWriter fileWriter = new FileWriter(filePath);
+        fileWriter.write(fileContent);
+        fileWriter.close();
     }
 
     private static int todoFunction(String line, Task[] addLists, int addListsCounter) throws DukeException {
