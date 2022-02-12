@@ -30,4 +30,10 @@ Oh no! Something went wrong.
 OOPS!!! The description of a deadline must have a task and date.
 Oh no! Something went wrong.
 OOPS!!! The description of an event must have a task and date.
+Noted. I've removed this task:
+    [T][ ] read book
+Now you have 2 tasks in the list.
+Here are the tasks in your list:
+1.[D][X] return book  (by:  Sunday)
+2.[E][ ] project meeting  (at:  Mon 2-4pm)
 Bye. Until we meet again!
