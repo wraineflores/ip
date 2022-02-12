@@ -33,8 +33,4 @@ public class Task {
     public String toString() {
         return "[" + getStatusIcon() + "] " + getDescription();
     }
-
-    public boolean isEmpty() {
-        return description.equals("");
-    }
 }

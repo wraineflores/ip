@@ -1,22 +1,20 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
+    //@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("DM_DEFAULT_ENCODING")
     public static void main(String[] args) throws DukeException {
         System.out.println("Hello! I'm Earl Grey\nWhat can I do for you?");
         String TODO_EXCEPTION_STATEMENT = "OOPS!!! The description of a todo cannot be empty.";
         String DEADLINE_EXCEPTION_STATEMENT = "OOPS!!! The description of a deadline must have a task and date.";
         String EVENT_EXCEPTION_STATEMENT = "OOPS!!! The description of an event must have a task and date.";
         String ELSE_EXCEPTION_STATEMENT = "OOPS!!! I'm sorry, but I don't know what that means :-(";
-        String DELETED_TASK_STATEMENT = "Noted. I've removed this task:";
 
         String line;
         Scanner in = new Scanner(System.in);
         line = in.nextLine().trim();            // reads input
         LineSplitter lineSplitter;              // class that splits input
 
-        //Task[] addLists = new Task[100];        // array of all tasks
-        ArrayList<Task> addLists = new ArrayList<>();
+        Task[] addLists = new Task[100];        // array of all tasks
         int addListsCounter = 0;                // counts the number of non-null elements in the array
         int workingIndex = 0;                   // points to the index where we want o mark or unmark
 
@@ -26,15 +24,12 @@ public class Duke {
                 updatedList.printList();
             } else if (line.startsWith(String.valueOf(CommandTypes.mark))) {
                 workingIndex = Integer.parseInt(line.replace("mark", "").trim()) - 1;
-                addLists.get(workingIndex).markAsDone();
-                System.out.println(addLists.get(workingIndex).toString());
+                addLists[workingIndex].markAsDone();
+                System.out.println(addLists[workingIndex].toString());
             } else if (line.startsWith(String.valueOf(CommandTypes.unmark))) {
                 workingIndex = Integer.parseInt(line.replace("unmark", "").trim()) - 1;
-                addLists.get(workingIndex).markAsUndone();
-                System.out.println(addLists.get(workingIndex).toString());
-            } else if (line.startsWith(String.valueOf(CommandTypes.delete))) {
-                workingIndex = Integer.parseInt(line.replace("delete", "").trim()) - 1;
-                addListsCounter = deletedFunction(DELETED_TASK_STATEMENT, addLists, addListsCounter, workingIndex);
+                addLists[workingIndex].markAsUndone();
+                System.out.println(addLists[workingIndex].toString());
             } else if (line.startsWith(String.valueOf(CommandTypes.todo))) {
                 try {
                     addListsCounter = todoFunction(line, addLists, addListsCounter);
@@ -61,28 +56,18 @@ public class Duke {
         System.out.println("Bye. Until we meet again!");
     }
 
-    private static int deletedFunction(String DELETED_TASK_STATEMENT, ArrayList<Task> addLists, int addListsCounter, int workingIndex) {
-        System.out.println(DELETED_TASK_STATEMENT);
-        System.out.println(addLists.get(workingIndex).toString());
-        addLists.remove(workingIndex);
-        addListsCounter--;
-        System.out.println("Now you have " + addListsCounter + " tasks in the list.");
-        return addListsCounter;
-    }
-
-    private static int todoFunction(String line, ArrayList<Task> addLists, int addListsCounter) throws DukeException {
+    private static int todoFunction(String line, Task[] addLists, int addListsCounter) throws DukeException {
         LineSplitter lineSplitter;
         lineSplitter = getLineSplitter(line);
         if (lineSplitter.getNewDescription().isEmpty()) {
             throw new DukeException();
         }
-        Todo newTodo = new Todo(lineSplitter.getNewDescription());
-        addLists.add(newTodo);
-        addListsCounter = printAdded(addListsCounter, addLists.get(addListsCounter));
+        addLists[addListsCounter] = new Todo(lineSplitter.getNewDescription());
+        addListsCounter = printAdded(addListsCounter, addLists[addListsCounter]);
         return addListsCounter;
     }
 
-    private static int eventFunction(String line, ArrayList<Task> addLists, int addListsCounter) throws DukeException {
+    private static int eventFunction(String line, Task[] addLists, int addListsCounter) throws DukeException {
         LineSplitter lineSplitter;
         lineSplitter = getLineSplitter(line);
         try {
@@ -92,13 +77,12 @@ public class Duke {
         } catch (NullPointerException e) {
             throw new DukeException();
         }
-        Event newEvent = new Event(lineSplitter.getNewDescription(), lineSplitter.getByOrAt());
-        addLists.add(newEvent);
-        addListsCounter = printAdded(addListsCounter, addLists.get(addListsCounter));
+        addLists[addListsCounter] = new Event(lineSplitter.getNewDescription(), lineSplitter.getByOrAt());
+        addListsCounter = printAdded(addListsCounter, addLists[addListsCounter]);
         return addListsCounter;
     }
 
-    private static int deadlineFunction(String line, ArrayList<Task> addLists, int addListsCounter) throws DukeException {
+    private static int deadlineFunction(String line, Task[] addLists, int addListsCounter) throws DukeException {
         LineSplitter lineSplitter;
         lineSplitter = getLineSplitter(line);
         try {
@@ -108,9 +92,8 @@ public class Duke {
         } catch (NullPointerException e) {
             throw new DukeException();
         }
-        Deadline newDeadline = new Deadline(lineSplitter.getNewDescription(), lineSplitter.getByOrAt());
-        addLists.add(newDeadline);
-        addListsCounter = printAdded(addListsCounter, addLists.get(addListsCounter));
+        addLists[addListsCounter] = new Deadline(lineSplitter.getNewDescription(), lineSplitter.getByOrAt());
+        addListsCounter = printAdded(addListsCounter, addLists[addListsCounter]);
         return addListsCounter;
     }
 

@@ -1,20 +1,17 @@
-import java.util.ArrayList;
-
 public class List {
-    //protected static Object[] addLists;
-    protected static ArrayList<Task> addLists;
+    protected Task[] addLists;
 
-    protected List(ArrayList<Task> addLists) {
+    public List(Task[] addLists) {
         this.addLists = addLists;
     }
 
-    static void printList() {
+    public void printList() {
         System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < addLists.size(); i++) {
-            if (addLists.get(i) == null) {
-                continue;
+        for (int i = 0; i < addLists.length; i++) {
+            if (addLists[i] == null) {
+                break;
             } else {
-                System.out.println(Integer.toString(i + 1) + "." + addLists.get(i).toString().trim());
+                System.out.println(Integer.toString(i + 1) + "." + addLists[i].toString().trim());
             }
         }
     }
