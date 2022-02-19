@@ -1,12 +1,12 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
     static String fileContent = "";
+    static int addListsCounter = 0;                // counts the number of non-null elements in the array
+    static int workingIndex = 0;                   // points to the index where we want o mark or unmark
+    static boolean isSaved = false;
     static String TODO_EXCEPTION_STATEMENT = "OOPS!!! The description of a todo cannot be empty.";
     static String DEADLINE_EXCEPTION_STATEMENT = "OOPS!!! The description of a deadline must have a task and date.";
     static String EVENT_EXCEPTION_STATEMENT = "OOPS!!! The description of an event must have a task and date.";
@@ -18,6 +18,7 @@ public class Duke {
         Scanner scan = new Scanner(file);
         while (scan.hasNextLine()) {
             fileContent = fileContent.concat(scan.nextLine() + "\n");
+            addListsCounter++;
         }
     }
 
@@ -48,23 +49,6 @@ public class Duke {
         return addListsCounter;
     }
 
-    private static int eventFunction(String line, ArrayList<Task> addLists, int addListsCounter) throws
-            DukeException {
-        LineSplitter lineSplitter;
-        lineSplitter = getLineSplitter(line);
-        try {
-            if (lineSplitter.getNewDescription().isEmpty() || lineSplitter.getByOrAt().isEmpty()) {
-                throw new DukeException();
-            }
-        } catch (NullPointerException e) {
-            throw new DukeException();
-        }
-        Event newEvent = new Event(lineSplitter.getNewDescription(), lineSplitter.getByOrAt());
-        addLists.add(newEvent);
-        addListsCounter = printAdded(addListsCounter, addLists.get(addListsCounter));
-        return addListsCounter;
-    }
-
     private static int deadlineFunction(String line, ArrayList<Task> addLists, int addListsCounter) throws
             DukeException {
         LineSplitter lineSplitter;
@@ -78,6 +62,23 @@ public class Duke {
         }
         Deadline newDeadline = new Deadline(lineSplitter.getNewDescription(), lineSplitter.getByOrAt());
         addLists.add(newDeadline);
+        addListsCounter = printAdded(addListsCounter, addLists.get(addListsCounter));
+        return addListsCounter;
+    }
+
+    private static int eventFunction(String line, ArrayList<Task> addLists, int addListsCounter) throws
+            DukeException {
+        LineSplitter lineSplitter;
+        lineSplitter = getLineSplitter(line);
+        try {
+            if (lineSplitter.getNewDescription().isEmpty() || lineSplitter.getByOrAt().isEmpty()) {
+                throw new DukeException();
+            }
+        } catch (NullPointerException e) {
+            throw new DukeException();
+        }
+        Event newEvent = new Event(lineSplitter.getNewDescription(), lineSplitter.getByOrAt());
+        addLists.add(newEvent);
         addListsCounter = printAdded(addListsCounter, addLists.get(addListsCounter));
         return addListsCounter;
     }
@@ -97,17 +98,33 @@ public class Duke {
         return lineSplitter;
     }
 
-    public static void main(String[] args) throws DukeException {
-        System.out.println("Hello! I'm Earl Grey\nWhat can I do for you?");
+    private static ArrayList<Task> tryCatchReadFile(ArrayList<Task> addLists) {
+        try {
+            File file = new File("savedDukeData.txt");
+            if (file.exists()) {
+                readFromFile("savedDukeData.txt");
+                InsertFileContent insertFileContent = new InsertFileContent(fileContent, addLists);
+                addLists = insertFileContent.getAddLists();
+                isSaved = true;
+            } else {
+                PrintWriter writer = new PrintWriter("savedDukeData.txt", "UTF-8");
+                writer.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return addLists;
+    }
 
+    public static void main(String[] args) throws DukeException, IOException {
+        ArrayList<Task> addLists = new ArrayList<>();
+        addLists = tryCatchReadFile(addLists);
+
+        System.out.println("Hello! I'm Earl Grey\nWhat can I do for you?");
         String line;
         Scanner in = new Scanner(System.in);
         line = in.nextLine().trim();            // reads input
         LineSplitter lineSplitter;              // class that splits input
-
-        ArrayList<Task> addLists = new ArrayList<>();
-        int addListsCounter = 0;                // counts the number of non-null elements in the array
-        int workingIndex = 0;                   // points to the index where we want o mark or unmark
 
         while (!String.valueOf(CommandTypes.bye).equals(line)) {
             if (line.startsWith(String.valueOf(CommandTypes.list))) {
@@ -147,6 +164,8 @@ public class Duke {
             }
             line = in.nextLine().trim();
         }
+        WriteOutFileContent writeOutFileContent = new WriteOutFileContent(addLists);
+        writeOutFileContent.getWriteForAll();
         System.out.println("Bye. Until we meet again!");
     }
 }

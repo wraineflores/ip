@@ -8,11 +8,15 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return (isDone ? "X" : " ");
+        return (isDone ? "1" : "0");
     }
 
     public void markAsDone() {
         System.out.println("Nice! I've marked this task as done:");
+        isDone = true;
+    }
+
+    public void setAsDone() {
         isDone = true;
     }
 

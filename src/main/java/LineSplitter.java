@@ -1,12 +1,33 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class LineSplitter {
     protected String description;
     protected String tempDescription;
     protected String newDescription;
     protected String byOrAt;
+    protected String markOrUnmark;
     protected String[] arrOfDescription;
+    protected ArrayList<String> fileContentStringLists;
 
     public LineSplitter(String description) {
         this.description = description;
+    }
+
+    public void splitLineFileContent() {
+        fileContentStringLists = new ArrayList<String>(Arrays.asList(description.split("---")));
+        if (fileContentStringLists.get(0).equalsIgnoreCase("todo")) {
+            markOrUnmark = fileContentStringLists.get(1).trim();
+            newDescription = fileContentStringLists.get(2).trim();
+        } else if (fileContentStringLists.get(0).equalsIgnoreCase("deadline")) {
+            markOrUnmark = fileContentStringLists.get(1).trim();
+            newDescription = fileContentStringLists.get(2).trim();
+            byOrAt = fileContentStringLists.get(3).trim();
+        } else if (fileContentStringLists.get(0).equalsIgnoreCase("event")) {
+            markOrUnmark = fileContentStringLists.get(1).trim();
+            newDescription = fileContentStringLists.get(2).trim();
+            byOrAt = fileContentStringLists.get(3).trim();
+        }
     }
 
     public void splitLine() {
@@ -39,5 +60,9 @@ public class LineSplitter {
 
     public String getByOrAt() {
         return byOrAt;
+    }
+
+    public String getMarkOrUnmark() {
+        return markOrUnmark;
     }
 }

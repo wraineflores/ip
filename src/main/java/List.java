@@ -8,7 +8,7 @@ public class List {
         this.addLists = addLists;
     }
 
-    static void printList() {
+    public static void printList() {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < addLists.size(); i++) {
             if (addLists.get(i) == null) {
