@@ -1,4 +1,13 @@
-import java.io.*;
+/**
+ * Executes the main Java programme
+ * To be updated
+ */
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -28,7 +37,8 @@ public class Duke {
         fileWriter.close();
     }
 
-    private static int deletedFunction(String DELETED_TASK_STATEMENT, ArrayList<Task> addLists, int addListsCounter, int workingIndex) {
+    private static int deletedFunction(String DELETED_TASK_STATEMENT, ArrayList<Task> addLists, int addListsCounter,
+                                       int workingIndex) {
         System.out.println(DELETED_TASK_STATEMENT);
         System.out.println(addLists.get(workingIndex).toString());
         addLists.remove(workingIndex);
@@ -71,7 +81,9 @@ public class Duke {
         LineSplitter lineSplitter;
         lineSplitter = getLineSplitter(line);
         try {
-            if (lineSplitter.getNewDescription().isEmpty() || lineSplitter.getByOrAt().isEmpty()) {
+            if (lineSplitter.getNewDescription().isEmpty()) {
+                throw new DukeException();
+            } else if (lineSplitter.getByOrAt().isEmpty()) {
                 throw new DukeException();
             }
         } catch (NullPointerException e) {
@@ -116,10 +128,65 @@ public class Duke {
         return addLists;
     }
 
+    private static void mainLoopFunction(ArrayList<Task> addLists, String line) {
+        if (line.startsWith(String.valueOf(CommandTypes.list))) {
+            List updatedList = new List(addLists);
+            updatedList.printList();
+        } else if (line.startsWith(String.valueOf(CommandTypes.mark))) {
+            workingIndex = Integer.parseInt(line.replace("mark", "").trim()) - 1;
+            addLists.get(workingIndex).markAsDone();
+            System.out.println(addLists.get(workingIndex).toString());
+        } else if (line.startsWith(String.valueOf(CommandTypes.unmark))) {
+            workingIndex = Integer.parseInt(line.replace("unmark", "").trim()) - 1;
+            addLists.get(workingIndex).markAsUndone();
+            System.out.println(addLists.get(workingIndex).toString());
+        } else if (line.startsWith(String.valueOf(CommandTypes.delete))) {
+            workingIndex = Integer.parseInt(line.replace("delete", "").trim()) - 1;
+            addListsCounter = deletedFunction(DELETED_TASK_STATEMENT, addLists, addListsCounter, workingIndex);
+        } else if (line.startsWith(String.valueOf(CommandTypes.todo))) {
+            todoTryCatch(addLists, line);
+        } else if (line.startsWith(String.valueOf(CommandTypes.deadline))) {
+            deadlineTryCatch(addLists, line);
+        } else if (line.startsWith(String.valueOf(CommandTypes.event))) {
+            eventTryCatch(addLists, line);
+        } else {
+            System.out.println(ELSE_EXCEPTION_STATEMENT);
+        }
+    }
+
+    private static void eventTryCatch(ArrayList<Task> addLists, String line) {
+        try {
+            addListsCounter = eventFunction(line, addLists, addListsCounter);
+        } catch (DukeException e) {
+            System.out.println(EVENT_EXCEPTION_STATEMENT);
+        }
+    }
+
+    private static void deadlineTryCatch(ArrayList<Task> addLists, String line) {
+        try {
+            addListsCounter = deadlineFunction(line, addLists, addListsCounter);
+        } catch (DukeException e) {
+            System.out.println(DEADLINE_EXCEPTION_STATEMENT);
+        }
+    }
+
+    private static void todoTryCatch(ArrayList<Task> addLists, String line) {
+        try {
+            addListsCounter = todoFunction(line, addLists, addListsCounter);
+        } catch (DukeException e) {
+            System.out.println(TODO_EXCEPTION_STATEMENT);
+        }
+    }
+
+    private static void programmeExits(ArrayList<Task> addLists) throws FileNotFoundException {
+        WriteOutFileContent writeOutFileContent = new WriteOutFileContent(addLists);
+        writeOutFileContent.getWriteForAll();
+        System.out.println("Bye. Until we meet again!");
+    }
+
     public static void main(String[] args) throws DukeException, IOException {
         ArrayList<Task> addLists = new ArrayList<>();
         addLists = tryCatchReadFile(addLists);
-
         System.out.println("Hello! I'm Earl Grey\nWhat can I do for you?");
         String line;
         Scanner in = new Scanner(System.in);
@@ -127,45 +194,9 @@ public class Duke {
         LineSplitter lineSplitter;              // class that splits input
 
         while (!String.valueOf(CommandTypes.bye).equals(line)) {
-            if (line.startsWith(String.valueOf(CommandTypes.list))) {
-                List updatedList = new List(addLists);
-                updatedList.printList();
-            } else if (line.startsWith(String.valueOf(CommandTypes.mark))) {
-                workingIndex = Integer.parseInt(line.replace("mark", "").trim()) - 1;
-                addLists.get(workingIndex).markAsDone();
-                System.out.println(addLists.get(workingIndex).toString());
-            } else if (line.startsWith(String.valueOf(CommandTypes.unmark))) {
-                workingIndex = Integer.parseInt(line.replace("unmark", "").trim()) - 1;
-                addLists.get(workingIndex).markAsUndone();
-                System.out.println(addLists.get(workingIndex).toString());
-            } else if (line.startsWith(String.valueOf(CommandTypes.delete))) {
-                workingIndex = Integer.parseInt(line.replace("delete", "").trim()) - 1;
-                addListsCounter = deletedFunction(DELETED_TASK_STATEMENT, addLists, addListsCounter, workingIndex);
-            } else if (line.startsWith(String.valueOf(CommandTypes.todo))) {
-                try {
-                    addListsCounter = todoFunction(line, addLists, addListsCounter);
-                } catch (DukeException e) {
-                    System.out.println(TODO_EXCEPTION_STATEMENT);
-                }
-            } else if (line.startsWith(String.valueOf(CommandTypes.deadline))) {
-                try {
-                    addListsCounter = deadlineFunction(line, addLists, addListsCounter);
-                } catch (DukeException e) {
-                    System.out.println(DEADLINE_EXCEPTION_STATEMENT);
-                }
-            } else if (line.startsWith(String.valueOf(CommandTypes.event))) {
-                try {
-                    addListsCounter = eventFunction(line, addLists, addListsCounter);
-                } catch (DukeException e) {
-                    System.out.println(EVENT_EXCEPTION_STATEMENT);
-                }
-            } else {
-                System.out.println(ELSE_EXCEPTION_STATEMENT);
-            }
+            mainLoopFunction(addLists, line);
             line = in.nextLine().trim();
         }
-        WriteOutFileContent writeOutFileContent = new WriteOutFileContent(addLists);
-        writeOutFileContent.getWriteForAll();
-        System.out.println("Bye. Until we meet again!");
+        programmeExits(addLists);
     }
 }
