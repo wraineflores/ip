@@ -5,8 +5,8 @@ import java.util.Scanner;
 public class TaskList {
     static int workingIndex = 0;       // points to the index where we want o mark or unmark
     static String TODO_EXCEPTION_STATEMENT = "OOPS!!! The description of a todo cannot be empty.";
-    static String DEADLINE_EXCEPTION_STATEMENT = "OOPS!!! The description of a deadline must have a task and date.";
-    static String EVENT_EXCEPTION_STATEMENT = "OOPS!!! The description of an event must have a task and date.";
+    static String DEADLINE_EXCEPTION_STATEMENT = "OOPS!!! The description must have a task and date (YYYY-MM-DD).";
+    static String EVENT_EXCEPTION_STATEMENT = "OOPS!!! The description must have a task and date (YYYY-MM-DD).";
     static String ELSE_EXCEPTION_STATEMENT = "OOPS!!! I'm sorry, but I don't know what that means :-(";
     static String DELETED_TASK_STATEMENT = "Noted. I've removed this task:";
     static String DELETED_FAILED_TASK_STATEMENT = "OOPS!!! Task was not deleted.";
