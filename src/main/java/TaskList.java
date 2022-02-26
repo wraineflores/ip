@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class TaskList {
     static int workingIndex = 0;       // points to the index where we want o mark or unmark
+    static String findKeyWord;
     static String TODO_EXCEPTION_STATEMENT = "OOPS!!! The description of a todo cannot be empty.";
     static String DEADLINE_EXCEPTION_STATEMENT = "OOPS!!! The description must have a task and date (YYYY-MM-DD).";
     static String EVENT_EXCEPTION_STATEMENT = "OOPS!!! The description must have a task and date (YYYY-MM-DD).";
@@ -11,6 +12,9 @@ public class TaskList {
     static String DELETED_TASK_STATEMENT = "Noted. I've removed this task:";
     static String DELETED_FAILED_TASK_STATEMENT = "OOPS!!! Task was not deleted.";
     static String MARK_UNMARK_FAILED_STATEMENT = "OOPS!!! Please key in a correct input.";
+    static String START_FIND_STATEMENT = "Here are the matching tasks in your list:";
+    static String FINISHED_FIND_STATEMENT = "System finished finding keyword.";
+    static String FAILED_FIND_STATEMENT = "OOPS!!! Keyword is empty.";
 
     public TaskList() {
     }
@@ -136,6 +140,22 @@ public class TaskList {
         }
     }
 
+    private static void findCommand(ArrayList<Task> addLists, String line) {
+        findKeyWord = line.replace("find", "").trim();
+        if (!findKeyWord.equalsIgnoreCase("")) {
+            System.out.println(START_FIND_STATEMENT);
+            for (Task addList : addLists) {
+                if (addList.getDescription().contains(findKeyWord)) {
+                    System.out.println(Integer.toString(addLists.indexOf(addList) + 1) + "." + addList.toString().trim());
+                }
+            }
+            System.out.println(FINISHED_FIND_STATEMENT);
+        } else {
+            System.out.println(FAILED_FIND_STATEMENT);
+        }
+
+    }
+
     static void mainLoopCommand(ArrayList<Task> addLists, String line) {
         if (line.startsWith(String.valueOf(TaskListCommand.list))) {
             List updatedList = new List(addLists);
@@ -152,6 +172,8 @@ public class TaskList {
             deadlineTryCatch(addLists, line);
         } else if (line.startsWith(String.valueOf(TaskListCommand.event))) {
             eventTryCatch(addLists, line);
+        } else if (line.startsWith(String.valueOf(TaskListCommand.find))) {
+            findCommand(addLists, line);
         } else {
             System.out.println(ELSE_EXCEPTION_STATEMENT);
         }

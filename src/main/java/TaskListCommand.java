@@ -1,3 +1,3 @@
 public enum TaskListCommand {
-    todo, deadline, event, mark, unmark, list, bye, delete
+    todo, deadline, event, mark, unmark, list, bye, delete, find
 }
