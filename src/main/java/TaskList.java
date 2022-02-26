@@ -5,8 +5,8 @@ import java.util.Scanner;
 public class TaskList {
     static int workingIndex = 0;       // points to the index where we want o mark or unmark
     static String TODO_EXCEPTION_STATEMENT = "OOPS!!! The description of a todo cannot be empty.";
-    static String DEADLINE_EXCEPTION_STATEMENT = "OOPS!!! The description of a deadline must have a task and date.";
-    static String EVENT_EXCEPTION_STATEMENT = "OOPS!!! The description of an event must have a task and date.";
+    static String DEADLINE_EXCEPTION_STATEMENT = "OOPS!!! The description must have a task and date (YYYY-MM-DD).";
+    static String EVENT_EXCEPTION_STATEMENT = "OOPS!!! The description must have a task and date (YYYY-MM-DD).";
     static String ELSE_EXCEPTION_STATEMENT = "OOPS!!! I'm sorry, but I don't know what that means :-(";
     static String DELETED_TASK_STATEMENT = "Noted. I've removed this task:";
     static String DELETED_FAILED_TASK_STATEMENT = "OOPS!!! Task was not deleted.";
@@ -15,7 +15,7 @@ public class TaskList {
     public TaskList() {
     }
 
-    private static void deletedCommand(String line, ArrayList<Task> addLists, int workingIndex) {
+    private static void deletedCommand(String line, ArrayList<Task> addLists) {
         try {
             workingIndex = Integer.parseInt(line.replace("delete", "").trim()) - 1;
             System.out.println(DELETED_TASK_STATEMENT);
@@ -38,8 +38,7 @@ public class TaskList {
         printAddedToList(newTodo, addLists);
     }
 
-    private static void deadlineCommand(String line, ArrayList<Task> addLists) throws
-            DukeException {
+    private static void deadlineCommand(String line, ArrayList<Task> addLists) throws DukeException {
         Parser parser;
         parser = getParser(line);
         try {
@@ -47,17 +46,19 @@ public class TaskList {
                 throw new DukeException();
             } else if (parser.getByOrAt().isEmpty()) {
                 throw new DukeException();
+            } else if (parser.getDate() == null) {
+                throw new DukeException();
+            } else {
+                Deadline newDeadline = new Deadline(parser.getNewDescription(), parser.getByOrAt());
+                addLists.add(newDeadline);
+                printAddedToList(newDeadline, addLists);
             }
         } catch (NullPointerException e) {
             throw new DukeException();
         }
-        Deadline newDeadline = new Deadline(parser.getNewDescription(), parser.getByOrAt());
-        addLists.add(newDeadline);
-        printAddedToList(newDeadline, addLists);
     }
 
-    private static void eventCommand(String line, ArrayList<Task> addLists) throws
-            DukeException {
+    private static void eventCommand(String line, ArrayList<Task> addLists) throws DukeException {
         Parser parser;
         parser = getParser(line);
         try {
@@ -65,13 +66,16 @@ public class TaskList {
                 throw new DukeException();
             } else if (parser.getByOrAt().isEmpty()) {
                 throw new DukeException();
+            } else if (parser.getDate() == null) {
+                throw new DukeException();
+            } else {
+                Event newEvent = new Event(parser.getNewDescription(), parser.getByOrAt());
+                addLists.add(newEvent);
+                printAddedToList(newEvent, addLists);
             }
         } catch (NullPointerException e) {
             throw new DukeException();
         }
-        Event newEvent = new Event(parser.getNewDescription(), parser.getByOrAt());
-        addLists.add(newEvent);
-        printAddedToList(newEvent, addLists);
     }
 
     private static void printAddedToList(Task task, ArrayList<Task> addLists) {
@@ -141,7 +145,7 @@ public class TaskList {
         } else if (line.startsWith(String.valueOf(TaskListCommand.unmark))) {
             unmarkCommand(addLists, line);
         } else if (line.startsWith(String.valueOf(TaskListCommand.delete))) {
-            deletedCommand(line, addLists, workingIndex);
+            deletedCommand(line, addLists);
         } else if (line.startsWith(String.valueOf(TaskListCommand.todo))) {
             todoTryCatch(addLists, line);
         } else if (line.startsWith(String.valueOf(TaskListCommand.deadline))) {

@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -9,6 +11,7 @@ public class Parser {
     protected String markOrUnmark;
     protected String[] arrOfDescriptions;
     protected ArrayList<String> fileContentStringLists;
+    protected LocalDate date;
 
     public Parser(String description) {
         this.description = description;
@@ -43,8 +46,9 @@ public class Parser {
                 this.tempDescription = description.replace("deadline", "").trim();
                 this.arrOfDescriptions = tempDescription.split("/by", 2);
                 this.newDescription = arrOfDescriptions[0];
-                this.byOrAt = arrOfDescriptions[1];
-            } catch (ArrayIndexOutOfBoundsException e) {
+                this.byOrAt = arrOfDescriptions[1].trim();
+                this.date = LocalDate.parse(byOrAt);
+            } catch (ArrayIndexOutOfBoundsException | DateTimeParseException e) {
                 System.out.println("Oh no! Something went wrong.");
             }
         } else if (description.startsWith("event")) {
@@ -52,11 +56,16 @@ public class Parser {
                 this.tempDescription = description.replace("event", "").trim();
                 this.arrOfDescriptions = tempDescription.split("/at", 2);
                 this.newDescription = arrOfDescriptions[0];
-                this.byOrAt = arrOfDescriptions[1];
-            } catch (ArrayIndexOutOfBoundsException e) {
+                this.byOrAt = arrOfDescriptions[1].trim();
+                this.date = LocalDate.parse(byOrAt);
+            } catch (ArrayIndexOutOfBoundsException | DateTimeParseException e) {
                 System.out.println("Oh no! Something went wrong.");
             }
         }
+    }
+
+    public LocalDate getDate() {
+        return date;
     }
 
     public String getNewDescription() {
