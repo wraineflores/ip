@@ -1,0 +1,12 @@
+todo---1---read book
+event---0---return book---Sunday
+event---0---project meeting---Mon 2-4pm
+todo---0---read book
+event---0---return book---Sunday
+event---0---project meeting---Mon 2-4pm
+todo---0---read book
+event---0---return book---Sunday
+event---0---project meeting---Mon 2-4pm
+todo---0---read book
+deadline---0---return book --- Sunday
+event---0---project meeting --- Mon 2-4pm

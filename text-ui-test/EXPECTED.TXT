@@ -1,29 +1,29 @@
 Hello! I'm Earl Grey
 What can I do for you?
 Got it. I've added this task:
-    [T][ ] read book
+    [T][0] read book
 Now you have 1 tasks in the list.
 Nice! I've marked this task as done:
-    [T][X] read book
+    [T][1] read book
 Here are the tasks in your list:
-1.[T][X] read book
+1.[T][1] read book
 Got it. I've added this task:
-    [D][ ] return book  (by:  Sunday)
+    [D][1] return book  (by:  Sunday)
 Now you have 2 tasks in the list.
 Nice! I've marked this task as done:
-    [D][X] return book  (by:  Sunday)
+    [D][1] return book  (by:  Sunday)
 OK, I've marked this task as not done yet:
-    [T][ ] read book
+    [T][0] read book
 Here are the tasks in your list:
-1.[T][ ] read book
-2.[D][X] return book  (by:  Sunday)
+1.[T][0] read book
+2.[D][1] return book  (by:  Sunday)
 Got it. I've added this task:
-    [E][ ] project meeting  (at:  Mon 2-4pm)
+    [E][0] project meeting  (at:  Mon 2-4pm)
 Now you have 3 tasks in the list.
 Here are the tasks in your list:
-1.[T][ ] read book
-2.[D][X] return book  (by:  Sunday)
-3.[E][ ] project meeting  (at:  Mon 2-4pm)
+1.[T][0] read book
+2.[D][1] return book  (by:  Sunday)
+3.[E][0] project meeting  (at:  Mon 2-4pm)
 OOPS!!! The description of a todo cannot be empty.
 OOPS!!! I'm sorry, but I don't know what that means :-(
 Oh no! Something went wrong.
@@ -31,9 +31,9 @@ OOPS!!! The description of a deadline must have a task and date.
 Oh no! Something went wrong.
 OOPS!!! The description of an event must have a task and date.
 Noted. I've removed this task:
-    [T][ ] read book
+    [T][0] read book
 Now you have 2 tasks in the list.
 Here are the tasks in your list:
-1.[D][X] return book  (by:  Sunday)
-2.[E][ ] project meeting  (at:  Mon 2-4pm)
+1.[D][0] return book  (by:  Sunday)
+2.[E][1] project meeting  (at:  Mon 2-4pm)
 Bye. Until we meet again!

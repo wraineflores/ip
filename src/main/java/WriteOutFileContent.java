@@ -17,9 +17,11 @@ public class WriteOutFileContent {
             if (addlist instanceof Todo) {
                 pw.println("todo---" + addlist.getStatusIcon() + "---" + addlist.getDescription());
             } else if (addlist instanceof Deadline) {
-                pw.println("deadline---" + addlist.getStatusIcon() + "---" + addlist.getDescription() + "---" + ((Deadline) addlist).getBy());
+                pw.println("deadline---" + addlist.getStatusIcon() + "---" + addlist.getDescription()
+                        + "---" + ((Deadline) addlist).getBy());
             } else if (addlist instanceof Event) {
-                pw.println("event---" + addlist.getStatusIcon() + "---" + addlist.getDescription() + "---" + ((Event) addlist).getAt());
+                pw.println("event---" + addlist.getStatusIcon() + "---" + addlist.getDescription()
+                        + "---" + ((Event) addlist).getAt());
             }
         }
         pw.close();

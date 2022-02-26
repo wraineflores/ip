@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class LineSplitter {
+public class Parser {
     protected String description;
     protected String tempDescription;
     protected String newDescription;
@@ -10,7 +10,7 @@ public class LineSplitter {
     protected String[] arrOfDescriptions;
     protected ArrayList<String> fileContentStringLists;
 
-    public LineSplitter(String description) {
+    public Parser(String description) {
         this.description = description;
     }
 
