@@ -15,7 +15,7 @@ public class TaskList {
     public TaskList() {
     }
 
-    private static void deletedCommand(String line, ArrayList<Task> addLists, int workingIndex) {
+    private static void deletedCommand(String line, ArrayList<Task> addLists) {
         try {
             workingIndex = Integer.parseInt(line.replace("delete", "").trim()) - 1;
             System.out.println(DELETED_TASK_STATEMENT);
@@ -38,8 +38,7 @@ public class TaskList {
         printAddedToList(newTodo, addLists);
     }
 
-    private static void deadlineCommand(String line, ArrayList<Task> addLists) throws
-            DukeException {
+    private static void deadlineCommand(String line, ArrayList<Task> addLists) throws DukeException {
         Parser parser;
         parser = getParser(line);
         try {
@@ -47,17 +46,19 @@ public class TaskList {
                 throw new DukeException();
             } else if (parser.getByOrAt().isEmpty()) {
                 throw new DukeException();
+            } else if (parser.getDate() == null) {
+                throw new DukeException();
+            } else {
+                Deadline newDeadline = new Deadline(parser.getNewDescription(), parser.getByOrAt());
+                addLists.add(newDeadline);
+                printAddedToList(newDeadline, addLists);
             }
         } catch (NullPointerException e) {
             throw new DukeException();
         }
-        Deadline newDeadline = new Deadline(parser.getNewDescription(), parser.getByOrAt());
-        addLists.add(newDeadline);
-        printAddedToList(newDeadline, addLists);
     }
 
-    private static void eventCommand(String line, ArrayList<Task> addLists) throws
-            DukeException {
+    private static void eventCommand(String line, ArrayList<Task> addLists) throws DukeException {
         Parser parser;
         parser = getParser(line);
         try {
@@ -65,13 +66,16 @@ public class TaskList {
                 throw new DukeException();
             } else if (parser.getByOrAt().isEmpty()) {
                 throw new DukeException();
+            } else if (parser.getDate() == null) {
+                throw new DukeException();
+            } else {
+                Event newEvent = new Event(parser.getNewDescription(), parser.getByOrAt());
+                addLists.add(newEvent);
+                printAddedToList(newEvent, addLists);
             }
         } catch (NullPointerException e) {
             throw new DukeException();
         }
-        Event newEvent = new Event(parser.getNewDescription(), parser.getByOrAt());
-        addLists.add(newEvent);
-        printAddedToList(newEvent, addLists);
     }
 
     private static void printAddedToList(Task task, ArrayList<Task> addLists) {
@@ -141,7 +145,7 @@ public class TaskList {
         } else if (line.startsWith(String.valueOf(TaskListCommand.unmark))) {
             unmarkCommand(addLists, line);
         } else if (line.startsWith(String.valueOf(TaskListCommand.delete))) {
-            deletedCommand(line, addLists, workingIndex);
+            deletedCommand(line, addLists);
         } else if (line.startsWith(String.valueOf(TaskListCommand.todo))) {
             todoTryCatch(addLists, line);
         } else if (line.startsWith(String.valueOf(TaskListCommand.deadline))) {
