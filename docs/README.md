@@ -1,5 +1,7 @@
 # User Guide
 
+Duke a checklist system that can store & save, add & delete, mark & unmark tasks in a list
+
 ## Features
 
 ### Feature - mark
@@ -8,19 +10,19 @@ Marks the task done
 
 ### Feature - unmark
 
-Unmarks a task
+Unmarks the task
 
 ### Feature - todo
 
-Adds a task in the list if todo is not empty
+Adds a todo task in the list if todo is not empty
 
 ### Feature - deadline
 
-Adds a deadline in the list if it has a task and a date between a '/by'
+Adds a deadline task in the list if it has a task and a date (YYYY-MM-DD) between a '/by'
 
 ### Feature - event
 
-Adds an event in the list if it has a task and a date between a '/at'
+Adds an event task in the list if it has a task and a date (YYYY-MM-DD) between a '/at'
 
 ### Feature - list
 
@@ -30,37 +32,72 @@ Lists all tasks in the list
 
 deletes a certain index in the list
 
+### Feature - find
+
+Find tasks in the list that has the keyword
+
+### Feature - help
+
+Gives users the list of all features
+
 ### Feature - bye
 
-Closes the program
-
-### Feature - read/write files
-
-To be updated in the future
-
-Examples are in 'input.txt' and 'EXPECTED.TXT' in text-ui-test file
-Test via terminal
-For windows, change directory to the directory of text-ui-test
-Type in:
-cmd.exe /c runtest.bat
-Then enter
+Closes and saves the program
 
 ---------------------------------------------------
 
 ## Usage
 
-### `Keyword` - Describe action
-
-Describe the action and its outcome.
+### `mark` - mark <number in list>
 
 Example of usage:
 
-`keyword (optional arguments)`
+`mark 1`
 
-Expected outcome:
+### `unmark` - unmark <number in list>
 
-Description of the outcome.
+Example of usage:
 
-```
-expected output
-```
+`unmark 1`
+
+### `todo` - todo <description>
+
+Example of usage:
+
+`todo read book`
+
+### `deadline` - deadline <description> /by <YYYY--MM-DD>
+
+Example of usage:
+
+`deadline finish reading book /by 2022-04-05`
+
+### `event` - event <description> /at <YYYY--MM-DD>
+
+Example of usage:
+
+`event join book club /at 2022-04-06`
+
+### `list` - list
+
+Example of usage:
+
+`list`
+
+### `delete` - delete <number in list>
+
+Example of usage:
+
+`delete 2`
+
+### `find` - find <keyword>
+
+Example of usage:
+
+`find club`
+
+### `bye` - bye
+
+Example of usage:
+
+`bye`
