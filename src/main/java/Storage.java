@@ -84,7 +84,7 @@ public class Storage {
         System.out.println("Event function example:");
         System.out.println("event <description> /at <YYYY--MM-DD>");
         System.out.println("Delete function example:");
-        System.out.println("delete ");
+        System.out.println("delete <number in list>");
         System.out.println("Find function example:");
         System.out.println("find <keyword>");
         System.out.println("Bye function example:");
