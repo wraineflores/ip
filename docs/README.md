@@ -48,13 +48,13 @@ Closes and saves the program
 
 ## Usage
 
-### `mark` - mark <number in list>
+### `mark` - mark (number in list)
 
 Example of usage:
 
 `mark 1`
 
-### `unmark` - unmark <number in list>
+### `unmark` - unmark (number in list)
 
 Example of usage:
 
@@ -66,13 +66,13 @@ Example of usage:
 
 `todo read book`
 
-### `deadline` - deadline <description> /by <YYYY--MM-DD>
+### `deadline` - deadline (description) /by (YYYY--MM-DD)
 
 Example of usage:
 
 `deadline finish reading book /by 2022-04-05`
 
-### `event` - event <description> /at <YYYY--MM-DD>
+### `event` - event (description) /at (YYYY--MM-DD)
 
 Example of usage:
 
@@ -84,13 +84,13 @@ Example of usage:
 
 `list`
 
-### `delete` - delete <number in list>
+### `delete` - delete (number in list)
 
 Example of usage:
 
 `delete 2`
 
-### `find` - find <keyword>
+### `find` - find (keyword)
 
 Example of usage:
 
