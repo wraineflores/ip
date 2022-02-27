@@ -3,6 +3,9 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+/**
+ * WriteOutFileContent represents a write to file when the program is closed
+ */
 public class WriteOutFileContent {
     protected ArrayList<Task> addLists;
 
@@ -10,6 +13,11 @@ public class WriteOutFileContent {
         this.addLists = addLists;
     }
 
+    /**
+     * This function saves in the text file
+     *
+     * @throws FileNotFoundException Exception thrown if no file was found
+     */
     public void getWriteForAll() throws FileNotFoundException {
         File f = new File("savedDukeData.txt");
         PrintWriter pw = new PrintWriter(f);
