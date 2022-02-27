@@ -1,6 +1,6 @@
 /**
  * Duke a checklist system that can store & save, add & delete,
- * mark & unmark tasks in the list
+ * mark & unmark tasks in the list.
  *
  * @author wraineflores
  * @version 1.0
